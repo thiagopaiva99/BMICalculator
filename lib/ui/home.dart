@@ -44,6 +44,17 @@ class HomeState extends State<Home> {
                             Icons.person_outline
                         )
                     ),
+                  ),
+                  new TextField(
+                    controller: null,
+                    keyboardType: TextInputType.number,
+                    decoration: new InputDecoration(
+                      labelText: "Height in feet",
+                      hintText: "Your height in numbers",
+                      icon: new Icon(
+                        Icons.assessment
+                      )
+                    ),
                   )
                 ],
               ),
