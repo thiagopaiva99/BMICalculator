@@ -8,8 +8,19 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
+  final TextEditingController _ageController = new TextEditingController();
+  final TextEditingController _heightController = new TextEditingController();
+  final TextEditingController _weightController = new TextEditingController();
 
   String _formattedText = "";
+
+  void handleRaisedButtonPressed() {
+    setState(() {
+      double bmiResult = calculateBMI(_weightController.text, _heightController.text);
+
+      _formattedText = "Your BMI: ${bmiResult.toStringAsFixed(1)}";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +49,7 @@ class HomeState extends State<Home> {
               child: new Column(
                 children: <Widget>[
                   new TextField(
-                    controller: null,
+                    controller: _ageController,
                     keyboardType: TextInputType.number,
                     decoration: new InputDecoration(
                         labelText: "Age",
@@ -49,7 +60,7 @@ class HomeState extends State<Home> {
                     ),
                   ),
                   new TextField(
-                    controller: null,
+                    controller: _heightController,
                     keyboardType: TextInputType.number,
                     decoration: new InputDecoration(
                       labelText: "Height in feet",
@@ -60,7 +71,7 @@ class HomeState extends State<Home> {
                     ),
                   ),
                   new TextField(
-                    controller: null,
+                    controller: _weightController,
                     keyboardType: TextInputType.number,
                     decoration: new InputDecoration(
                       labelText: "Weight in Kg",
@@ -76,8 +87,8 @@ class HomeState extends State<Home> {
                   new RaisedButton(
                     color: Colors.pinkAccent,
                     textColor: Colors.white,
-                    onPressed: () {},
-                    child: new Text("Botão"),
+                    onPressed: handleRaisedButtonPressed,
+                    child: new Text("Calculate"),
                   ),
                   new Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -96,5 +107,16 @@ class HomeState extends State<Home> {
         )
       ),
     );
+  }
+
+  double calculateBMI(String weight, String height) {
+    if (
+      double.parse(weight).toString().isNotEmpty && double.parse(weight) > 0 &&
+      double.parse(height).toString().isNotEmpty && double.parse(height) > 0
+    ) {
+      return double.parse(weight) / (double.parse(height) * double.parse(height));
+    }
+
+    return 0.0;
   }
 }
