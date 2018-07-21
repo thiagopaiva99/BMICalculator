@@ -8,17 +8,18 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  final TextEditingController _ageController = new TextEditingController();
   final TextEditingController _heightController = new TextEditingController();
   final TextEditingController _weightController = new TextEditingController();
 
   String _formattedText = "";
+  String _bmiStatus = "";
 
   void handleRaisedButtonPressed() {
     setState(() {
       double bmiResult = calculateBMI(_weightController.text, _heightController.text);
 
       _formattedText = "Your BMI: ${bmiResult.toStringAsFixed(1)}";
+      _bmiStatus = getBmiStatus(bmiResult);
     });
   }
 
@@ -48,17 +49,6 @@ class HomeState extends State<Home> {
               alignment: Alignment.topCenter,
               child: new Column(
                 children: <Widget>[
-                  new TextField(
-                    controller: _ageController,
-                    keyboardType: TextInputType.number,
-                    decoration: new InputDecoration(
-                        labelText: "Age",
-                        hintText: "Your age in numbers",
-                        icon: new Icon(
-                            Icons.person_outline
-                        )
-                    ),
-                  ),
                   new TextField(
                     controller: _heightController,
                     keyboardType: TextInputType.number,
@@ -99,6 +89,9 @@ class HomeState extends State<Home> {
                       fontWeight: FontWeight.w500,
                       fontSize: 22.0
                     ),
+                  ),
+                  new Text(
+                    "$_bmiStatus"
                   )
                 ],
               ),
@@ -118,5 +111,43 @@ class HomeState extends State<Home> {
     }
 
     return 0.0;
+  }
+
+  String getBmiStatus(double bmiResult) {
+    String result = "";
+
+    if (bmiResult < 15) {
+      result = "Extremely underweight";
+    }
+
+    if (bmiResult >= 15 && bmiResult < 16) {
+      result = "Severely underweight";
+    }
+
+    if (bmiResult >= 16 && bmiResult < 18.5) {
+      result = "Below the ideal weight";
+    }
+
+    if (bmiResult >= 18.5 && bmiResult < 25) {
+      result = "Ideal weight range";
+    }
+
+    if (bmiResult >= 25 && bmiResult < 30) {
+      result = "Overweight";
+    }
+
+    if (bmiResult >= 30 && bmiResult < 35) {
+      result = "Obesity grade 1";
+    }
+
+    if (bmiResult >= 35 && bmiResult < 40) {
+      result = "Obesity grade 2";
+    }
+
+    if (bmiResult >= 40) {
+      result = "Obesity grade 3";
+    }
+
+    return result;
   }
 }
