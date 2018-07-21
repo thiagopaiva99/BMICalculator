@@ -8,6 +8,9 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
+
+  String _formattedText = "";
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -54,6 +57,36 @@ class HomeState extends State<Home> {
                       icon: new Icon(
                         Icons.assessment
                       )
+                    ),
+                  ),
+                  new TextField(
+                    controller: null,
+                    keyboardType: TextInputType.number,
+                    decoration: new InputDecoration(
+                      labelText: "Weight in Kg",
+                      hintText: "Your weight in Kg",
+                      icon: new Icon(
+                        Icons.line_weight
+                      )
+                    ),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.all(15.0),
+                  ),
+                  new RaisedButton(
+                    color: Colors.pinkAccent,
+                    textColor: Colors.white,
+                    onPressed: () {},
+                    child: new Text("Botão"),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.all(10.0),
+                  ),
+                  new Text(
+                    "$_formattedText",
+                    style: new TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22.0
                     ),
                   )
                 ],
